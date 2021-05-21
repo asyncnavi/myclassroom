@@ -1,0 +1,63 @@
+{% include 'base.html' %}
+{% load static %}
+
+
+{% block page_content %}
+<div class="container my-4">
+
+    <div class="d-flex justify-content-end">
+        <a href="" class="mx-1 btn btn-success">Create</a>
+        <a href="" class="mx-1 btn btn-primary">Join</a>
+    </div>
+    <div class="">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/class">Joined classes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/class/created">Created classes</a>
+            </li>
+        </ul>
+    </div>
+
+    {% for class in joined_classes %}
+    <div class="class-card border">
+         <div>
+            <img style="width:36px;height:36px;border-radius:100%" src="https://yt3.ggpht.com/yti/ANoDKi6qkYmmkW5h-MgYVlY8Gk1D3fUyu6z8y2Pzfffl=s88-c-k-c0x00ffffff-no-rj-mo"
+                alt="">
+            <span class="text-capitalize">{{ class.teacher.name }}</span>
+          </div>
+
+        <h4>{{ class.name }}</h4>
+        <span style="width:max-content" class="badge bg-secondary">{{ class.subject }}</span>
+       <div class="class-card-delete-icon">
+          <a href="" class="icon text-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fal fa-trash"></i></a>
+       </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm exit</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you confirm to delete class : <span class="text-danger">{{ class.name }}</span> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+        <button type="button" class="btn btn-danger">Exit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock page_content %}

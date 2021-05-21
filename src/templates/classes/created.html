@@ -1,0 +1,79 @@
+{% include 'base.html' %}
+{% load static %}
+
+
+{% block page_content %}
+<div class="container my-4">
+    {% for message in messages  %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    <div class="d-flex justify-content-end">
+        <a href="/class/create" class="mx-1 btn btn-success">Create</a>
+        <a href="/class/join" class="mx-1 btn btn-primary">Join</a>
+    </div>
+    <div class="">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="/class">Joined classes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/class/created">Created classes</a>
+            </li>
+        </ul>
+    </div>
+
+    {% for class in created_classes %}
+        <div class="class-card border">
+            <div>
+                <img style="width:36px;height:36px;border-radius:100%"
+                    src="https://yt3.ggpht.com/yti/ANoDKi6qkYmmkW5h-MgYVlY8Gk1D3fUyu6z8y2Pzfffl=s88-c-k-c0x00ffffff-no-rj-mo"
+                    alt="">
+                <span class="text-capitalize">{{ class.teacher.name }}</span>
+            </div>
+
+            <h4>{{ class.name }}</h4>
+            <span style="width:max-content" class="badge bg-secondary">{{ class.subject }}</span>
+            <div class="d-flex class-card-delete-icon">
+                <a href="" class="icon text-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                        class="fal fa-edit"></i></a>
+                <a href="" class="icon text-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                        class="fal fa-trash"></i></a>
+            </div>
+            {{ class.code }}
+            {{ class.pk }}
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Confirm exit</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Are you confirm to delete class : <span class="text-danger">{{ class.pk }} {{ class.name }}</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+                            <form action="{% url 'delete-class' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="class_id" id="class_id" value={{ class.pk }}>
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    {% endfor %}
+
+</div>
+
+{% endblock page_content %}
