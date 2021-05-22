@@ -40,16 +40,35 @@ button {
     background-color: #eeeeee;
 }
 
+.profile-link {
+    display: flex;
+    justify-content: flex-start;
+    text-decoration: none;
+    color: #000000;
+    align-items: center;
+    width: max-content;
+    padding: .3rem .5rem;
+    border-radius: 5px;
+}
+
+.profile-link:hover {
+    color: #000000;
+    background-color: #eeeeee;
+}
+
+
 .navbar-userinfo {
-    display : flex;
+    display: flex;
     align-items: center;
     cursor: pointer;
-    padding : 5px;
-    border-radius: 5px;    
+    padding: 5px;
+    border-radius: 5px;
 }
+
 .navbar-userinfo:hover {
     background-color: #eee;
 }
+
 .navbar-userinfo img {
     width: 36px;
     height: 36px;
@@ -58,27 +77,29 @@ button {
 
 .navbar-profile-dropdown {
     min-width: 200px !important;
-    padding : 1rem !important;
+    padding: 1rem !important;
     border-radius: 5px !important;
     margin-top: 10px;
 }
 
 .navbar-profile-dropdown > div {
-    display:  flex;
+    display: flex;
     flex-direction: column;
 }
+
 .navbar-profile-dropdown > div > a {
-    padding : .4rem;
+    padding: .4rem;
     border-radius: 4px;
-    color: rgba(0,0,0,.9);
+    color: rgba(0, 0, 0, .9);
     text-decoration: none;
 }
+
 .navbar-profile-dropdown > div > a:hover {
     background-color: #eeeeee;
 }
 
 .navbar-profile-dropdown > div > a > i {
-    color: rgba(0,0,0,.9) !important;
+    color: rgba(0, 0, 0, .9) !important;
 }
 
 .home-hero {
@@ -140,7 +161,7 @@ button {
 }
 
 .class-card-delete-icon {
-    position: absolute; 
-    top : 10px;
-    right : 10px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }

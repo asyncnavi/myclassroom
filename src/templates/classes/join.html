@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+
+{% block page_content %}
+    <div class="auth-wrapper">
+        <div class="auth-card">
+        <div class="d-flex align-items-start">
+                <a href="{% url 'classes' %}" class="icon">
+                    <i class="fal fa-arrow-left "></i>
+                </a>
+                <h3 class="mx-1">Join class</h3>
+            </div>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div>
+                    <label for="class_code">Enter class code</label>
+                    <input type="text" class="form-control" id="class_code" name="class_code">
+                </div>
+               <div class="d-flex justify-content-end my-2">
+               <button class="btn btn-success">Join</button>
+
+               </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
