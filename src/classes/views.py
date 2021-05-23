@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Classroom
 from .forms import CreateClassForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 
 
 # --------Joined classes-------
@@ -61,8 +62,12 @@ def join_class_view(request):
     if request.method == "POST":
         class_code = request.POST.get('class_code')
         code = class_code.strip()
-        classroom = Classroom.objects.get(code=code)
-        print(classroom)
+
+        try:
+            classroom = Classroom.objects.get(code=code)
+        except ObjectDoesNotExist:
+            messages.error(request, "Invalid class code")
+            return redirect("/class/join")
 
         if request.user == classroom.teacher:
             messages.error(request, "Your are owner of this class so you cannot join.")
@@ -112,10 +117,13 @@ def class_detail_view(request, code):
                 'classroom': classroom
             }
         else:
-            messages.error("Your not registered in this class enter class code and join.")
-            return redirect("/class/join")
+            if request.user == classroom.teacher:
+                return redirect(f"/class/t/detail/{class_code}")
+            else:
+                messages.error(request, "Your not registered in this class enter class code and join.")
+                return redirect("/class/join")
 
-    return render(request, "classes/detail.html", context)
+        return render(request, "classes/detail.html", context)
 
 
 # --------Classmates-------
@@ -140,13 +148,44 @@ def classmates_view(request, code):
     return render(request, "classes/classmates.html", context)
 
 
-def post_detail_view(request):
-    pass
+def classwork_view(request, code):
+    context = {}
+    if not request.user.is_authenticated:
+        return redirect("/")
+    else:
+        class_code = code.strip()
+        classroom = Classroom.objects.get(code=class_code)
+
+        if request.user in classroom.students.all():
+            classworks = classroom.classwork_set.all()
+
+            context = {
+                'classroom': classroom,
+                'classworks': classworks
+            }
+        else:
+            messages.error("Your not registered in this class enter class code and join.")
+            return redirect("/class/join")
+
+    return render(request, "classes/classwork.html", context)
 
 
-def assignements_view(request):
-    pass
+def classwork_submit_view(request, code, pk):
+    context = {}
+    if not request.user.is_authenticated:
+        return redirect("/")
+    else:
+        class_code = code.strip()
+        classroom = Classroom.objects.get(code=class_code)
 
+        if request.user in classroom.students.all():
+            classwork = classroom.classwork_set.get(id=pk)
+            context = {
+                'classroom': classroom,
+                'classwork': classwork
+            }
+        else:
+            messages.error("Your not registered in this class enter class code and join.")
+            return redirect("/class/join")
 
-def assignments_detail_view():
-    pass
+    return render(request, "classes/classwork.html", context)

@@ -19,6 +19,10 @@
                     <label for="class_code">Enter class code</label>
                     <input type="text" class="form-control" id="class_code" name="class_code">
                 </div>
+                {% for message in messages  %}
+                    <span class="text-danger my-2"> <i class="fal fa-info-circle"></i> {{ message }}</span>
+                {% endfor %}
+
                <div class="d-flex justify-content-end my-2">
                <button class="btn btn-success">Join</button>
 

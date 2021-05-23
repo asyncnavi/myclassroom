@@ -10,3 +10,4 @@ class User(AbstractUser):
     mobile = models.PositiveIntegerField(blank=True, null=True,
                                          validators=[MaxValueValidator(9999999999)])
     date_of_birth = models.DateField(blank=True, null=True)
+    bio = models.CharField(blank=True, null=True, max_length=60)

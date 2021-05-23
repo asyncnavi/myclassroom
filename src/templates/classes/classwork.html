@@ -4,8 +4,7 @@
 
 
 {% block page_content %}
-
-    <div class="container py-4">
+    <div class="container py-5">
         <div class="border-bottom">
             <div class="d-flex">
             <span class="icon">
@@ -36,22 +35,26 @@
 
 
         <div class="my-4">
-            <h4 class="mx-1 text-dark">Classmates</h4>
-            <div class="d-flex flex-wrap">
-                {% for classmate in classmates %}
-
-                    <div class="m-2 d-flex flex-column justify-content-center align-items-center align-content-center border p-2"
-                         style="width:max-content;border-radius: 10px">
-                        <img style="width: 80px;height: 80px;border-radius: 100%"
+            {% for classwork in classworks %}
+                <div class="border my-2 p-3"
+                     style="border-radius: 5px;cursor: pointer !important;">
+                    <a class="profile-link mb-2" href="/profile/{{ classroom.teacher.name }}">
+                        <img style="width:36px;height: 36px;border-radius: 100%"
                              src="https://yt3.ggpht.com/yti/ANoDKi6qkYmmkW5h-MgYVlY8Gk1D3fUyu6z8y2Pzfffl=s88-c-k-c0x00ffffff-no-rj-mo"
                              alt="">
-                        <h6 class="text-capitalize">{{ classmate.name }}</h6>
-                    </div>
-                {% endfor %}
-            </div>
+                        <span>{{ classroom.teacher.name }}</span>
+                    </a>
+                    <a href="/class/classwork/{{ classroom.code }}/{{ classroom.pk }}">
+                        <span class="badge bg-secondary mb-2">{{ classwork.get_created }}</span>
+                        <h5>{{ classwork.tittle }}</h5>
+                        <p>{{ classwork.detail|truncatechars:50 }}</p>
+                    </a>
+
+                </div>
+
+            {% endfor %}
 
         </div>
-
     </div>
 
 {% endblock %}

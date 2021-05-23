@@ -21,12 +21,12 @@
         </div>
 
         <!-- Tabs -->
-        <ul class="nav nav-tabs my-6">
+        <ul class="nav nav-tabs my-4">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Posts</a>
+                <a class="nav-link active" aria-current="page" href="/class/{{ classrom.code }}">Posts</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Classwork</a>
+                <a class="nav-link" href="/class/classwork/{{ classroom.code }}">Classwork</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/class/classmates/{{ classroom.code }}">Classmates</a>
@@ -35,10 +35,52 @@
 
         <div class="my-4">
             {% for post in posts %}
-                <div class="border my-2 p-3" style="border-radius: 5px;margin">
+                <div class="border my-2 p-3" data-bs-toggle="modal" data-bs-target="#post_detail_modal{{ post.id }}"
+                     style="border-radius: 5px;cursor: pointer !important;">
+                    <a class="profile-link mb-2" href="/profile/{{ classroom.teacher.username }}">
+                        <img style="width:36px;height: 36px;border-radius: 100%"
+                             src="https://yt3.ggpht.com/yti/ANoDKi6qkYmmkW5h-MgYVlY8Gk1D3fUyu6z8y2Pzfffl=s88-c-k-c0x00ffffff-no-rj-mo"
+                             alt="">
+                        <span>{{ classroom.teacher.name }}</span>
+                    </a>
+
+                    <span class="badge bg-secondary mb-2">{{ post.get_created }}</span>
+
                     <h5>{{ post.tittle }}</h5>
-                    <p>{{ post.detail }}</p>
+                    <p>{{ post.detail|truncatechars:50 }}</p>
+
                 </div>
+                <div class="modal fade" id="post_detail_modal{{ post.id }}" tabindex="-1"
+                     aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header d-flex align-items-start justify-content-start">
+                                <div class="icon" data-bs-dismiss="modal"><i class="fal fa-arrow-left"></i></div>
+                                <h5 class="mx-1 modal-title" id="exampleModalLabel">{{ post.tittle }}</h5>
+                            </div>
+                            <div class="modal-body">
+                                <h4>Details</h4>
+                                <hr>
+                                <p>
+                                    {{ post.detail }}
+                                </p>
+                                <h4>Attached Files</h4>
+                                <hr>
+                                {% if post.attached_file %}
+                                    <a target="_blank" href="{{ post.attached_file.url }}" class="btn btn-success">Download</a>
+                                {% else %}
+                                    <span>No attached file</span>
+                                {% endif %}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             {% endfor %}
 
         </div>

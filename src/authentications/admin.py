@@ -15,7 +15,7 @@ class CustomUserAdmin(UserAdmin):
                 'fields': ('name',
                            'profile_image',
                            'date_of_birth',
-                           'mobile')
+                           'mobile', 'bio')
             }
         ),
         *UserAdmin.fieldsets,
