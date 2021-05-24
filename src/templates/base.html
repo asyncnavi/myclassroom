@@ -9,7 +9,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <!-- Css -->
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <!-- Stylesheets block -->
@@ -18,43 +18,43 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom sticky ">
-        <div class="container">
-            <a class="navbar-brand" href="#">Myclassroom</a>
-            {% if user.is_authenticated %}
-            <div class="dropdown" >
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom sticky ">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">Myclassroom</a>
+        {% if request.user.is_authenticated %}
+            <div class="dropdown">
                 <div class="navbar-userinfo" id="profile-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="https://yt3.ggpht.com/yti/ANoDKi6qkYmmkW5h-MgYVlY8Gk1D3fUyu6z8y2Pzfffl=s88-c-k-c0x00ffffff-no-rj-mo"
-                        alt="">
+                         alt="">
                     <span>{{ user.name }} <i class="fal fa-chevron-down"></i></span>
                 </div>
                 <div class="dropdown-menu navbar-profile-dropdown" aria-labelledby="profile-dropdown">
                     <div>
-                        <a href="#"><i class="fal fa-user"></i> Profile</a>
-                        <a href="#"><i class="fal fa-chalkboard-teacher"></i> Create Class</a>
-                        <a href="#"><i class="fal fa-users-class"></i> Join Class</a>
-                        <a href="#"><i class="fal fa-cog"></i> Settings</a>
+                        <a href=""><i class="fal fa-user"></i> Profile</a>
+                        <a href="{% url 'create-class' %}"><i class="fal fa-chalkboard-teacher"></i> Create Class</a>
+                        <a href="{% url 'join-class' %}"><i class="fal fa-users-class"></i> Join Class</a>
+                        <a href=""><i class="fal fa-cog"></i> Settings</a>
                         <a href="{% url 'logout' %}"><i class="fal fa-sign-out-alt"></i> Logout</a>
                     </div>
                 </div>
 
             </div>
-            {% else %}
-            <div clas="d-flex">
+        {% else %}
+            <div class="d-flex">
                 <a href="{% url 'login' %}" class="btn btn-success">Login</a>
                 <a href="{% url 'signup' %}" class="btn btn-outline-success">Signup</a>
             </div>
-            {% endif %}
-        </div>
-    </nav>
-    {% block page_content %}{% endblock page_content %}
+        {% endif %}
+    </div>
+</nav>
+{% block page_content %}{% endblock page_content %}
 
-    <!-- Javscript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+<!-- Javscript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
         crossorigin="anonymous"></script>
-    <script src="{% static 'js/fontAwesome.js' %}"></script>
-    {% block scripts %}{% endblock scripts %}
+<script src="{% static 'js/fontAwesome.js' %}"></script>
+{% block scripts %}{% endblock scripts %}
 </body>
 
 </html>

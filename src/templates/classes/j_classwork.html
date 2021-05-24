@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block page_content %}
+    <div class="container py-5">
+        <div class="border-bottom">
+            <div class="d-flex">
+            <a href="{{ previous_url }}" class="icon">
+                <i class="fal fa-arrow-left"></i>
+            </a>
+                <h3 class="mx-1">{{ classroom.name }}</h3>
+            </div>
+            <a class="profile-link mb-2 mx-4" href="/profile/{{ classroom.teacher.username }}">
+                <img style="width:36px;height: 36px;border-radius: 100%"
+                     src="https://yt3.ggpht.com/yti/ANoDKi6qkYmmkW5h-MgYVlY8Gk1D3fUyu6z8y2Pzfffl=s88-c-k-c0x00ffffff-no-rj-mo"
+                     alt="">
+                <span>{{ classroom.teacher.name }}</span>
+            </a>
+        </div>
+
+       <!-- Tabs -->
+        <ul class="nav nav-tabs my-4">
+            <li class="nav-item">
+                <a class="nav-link"  href="{% url 'detailed-joined-class' code=classroom.code %}">Posts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'listed-classwork' code=classroom.code %}">Classwork</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'listed-classmates' code=classroom.code %}">Classmates</a>
+            </li>
+        </ul>
+
+
+        <div class="my-4">
+            {% for classwork in classworks %}
+                <div class="classwork-card border-bottom">
+
+                    <a href="{% url 'detailed-classwork' code=classroom.code pk=classwork.pk %}">
+                        <span class="d-block mx-1 p-1">
+                                <i class="fal fa-book fa-2x"></i>
+                        </span>
+                        <div class="d-flex align-items-start flex-column">
+                            <h6 class="mb-0">{{ classwork.tittle|truncatechars:30 }}</h6>
+                            <span class="m-0">{{ classwork.created }}</span>
+                        </div>
+                    </a>
+                </div>
+
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

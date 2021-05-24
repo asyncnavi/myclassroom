@@ -1,0 +1,76 @@
+{% include 'base.html' %}
+{% load static %}
+
+
+{% block page_content %}
+    <div class="container py-5">
+        <div class="border-bottom border-primary">
+            <div class="d-flex">
+                <a href="{{ previous_url }}" class="icon">
+                    <i class="fal fa-arrow-left"></i>
+                </a>
+                <a href="{% url 'detailed-joined-class' code=classroom.code %}" class="muted-to-link"><h3
+                        class="mx-1">{{ classroom.name|truncatechars:40 }}</h3></a>
+            </div>
+            <a class="profile-link mb-2 mx-4" href="/profile/{{ classroom.teacher.username }}">
+                <img style="width:36px;height: 36px;border-radius: 100%"
+                     src="https://yt3.ggpht.com/yti/ANoDKi6qkYmmkW5h-MgYVlY8Gk1D3fUyu6z8y2Pzfffl=s88-c-k-c0x00ffffff-no-rj-mo"
+                     alt="">
+                <span>{{ classroom.teacher.name }}</span>
+            </a>
+        </div>
+        {% for message in messages %}
+            <span class="text-success">{{ message }}</span>
+        {% endfor %}
+
+        <div class="row my-4 ">
+            <div class="col-lg-8">
+                <div class="" style="">
+                    <div class="">
+                        <h4 class="text-secondary">{{ classwork.tittle }}</h4>
+                        <time class="badge bg-secondary">{{ classwork.get_created }}</time>
+                    </div>
+                    <h6 class="border-bottom border-primary mt-4" style="width: max-content">Deadline</h6>
+                    <p>{{ classwork.deadline }}</p>
+                    <h6 class="border-bottom border-primary mt-4" style="width: max-content">Details</h6>
+                    <p>{{ classwork.detail }}</p>
+                    <h6 class="border-bottom border-primary mt-4" style="width: max-content">Attached Files</h6>
+                    <a href="{{ classwork.attached_file.url }}" download class="btn btn-sm btn-primary mt-4">Download</a>
+                </div>
+            </div>
+            <div class="col-lg-4 my-3">
+                <div class="border p-3 rounded">
+                    <h4>Your work</h4>
+                    {% if classwork.is_submission_ended %}
+                        {% if is_submitted %}
+                            <span class="text-muted">Submitted</span>
+                            <a href="{{ submission.uploaded_file.url }}" download class="d-block btn btn-sm btn-primary mt-4"> Download uploaded file</a>
+                        {% else %}
+                            <span class="text-mute">
+                                You cannot submit now as deadline is ended.Ask you teacher to open submission
+                              </span>
+                        {% endif %}
+                    {% else %}
+                        {% if is_submitted %}
+                            <span class="text-muted">You have already submitted.</span> <br>
+                            <a href="{{ submission.uploaded_file.url }}" download>Download submitted file</a>
+                        {% else %}
+                            <form action="{% url 'submit-classwork' %}" enctype="multipart/form-data" method="post"
+                                  class="my-2">
+                                <label for="" class="m-1">Upload file</label>
+                                <input type="file" name="uploaded_file" id="uploaded_file"
+                                       class="form-control border-none">
+                                <input type="hidden" name="classwork_id" id="classwork_id" value="{{ classwork.pk }}">
+                                <input type="hidden" name="class_code" id="class_code" value="{{ classroom.code }}">
+                                {% csrf_token %}
+                                <button class="btn btn-success w-100 my-3" type="submit">Submit</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

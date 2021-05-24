@@ -5,13 +5,36 @@ body {
     font-family: 'Rubik', sans-serif;
 }
 
-button {
-    font-weight: bold;
-    text-transform: uppercase;
+button, .btn {
+    font-weight: bold !important;
+    text-transform: uppercase !important;
 }
 
 .asteriskField {
     color: var(--bs-danger);
+}
+
+.nav-link {
+    color: var(--bs-secondary);
+    border: none
+}
+
+.nav-link:hover {
+    background-color: #eeeeee;
+    color: var(--bs-secondary);
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: var(--bs-green) !important;
+    border: none !important;
+    border-bottom: 1px solid var(--bs-green) !important;
+}
+
+.nav-tabs:hover .nav-item.show:hover .nav-link:hover, .nav-tabs:hover .nav-link.active:hover {
+    color: var(--bs-green) !important;
+    border: none !important;
+    border-bottom: 1px solid var(--bs-green) !important;
+    background-color: #eeeeee;
 }
 
 .icon {
@@ -38,6 +61,16 @@ button {
     color: black;
     outline: none;
     background-color: #eeeeee;
+}
+
+.muted-to-link {
+    color: var(--bs-secondary);
+    text-decoration: none;
+}
+
+.muted-to-link:hover {
+    color: var(--bs-primary);
+    text-decoration: underline;
 }
 
 .profile-link {
@@ -164,4 +197,44 @@ button {
     position: absolute;
     top: 10px;
     right: 10px;
+}
+
+
+.classmate-card {
+    padding: 1.4rem;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    flex-direction: column;
+    color: var(--bs-secondary);
+}
+
+.classmate-card:hover {
+    background-color: #eeeeee;
+    color: var(--bs-secondary);
+    text-decoration: none;
+}
+
+.classwork-card, .classwork-card > a {
+    width: 100%;
+    text-decoration: none;
+    color: var(--bs-secondary);
+    padding: .4rem;
+    display: flex;
+    justify-content: flex-start;
+    border-radius: 5px;
+    align-items : center;
+}
+.classwork-card > p {
+    font-size: 1.3rem;
+}
+.classwork-card:hover {
+    color: var(--bs-secondary);
+    text-decoration: none;
+    background-color: #eeeeee;
 }

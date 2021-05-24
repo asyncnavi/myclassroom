@@ -1,6 +1,6 @@
 from django import forms
-from .models import Classroom
-
+from .models import Classroom, Submission
+from django.core.exceptions import ValidationError
 
 class CreateClassForm(forms.ModelForm):
     name = forms.CharField(max_length=50)
@@ -8,29 +8,29 @@ class CreateClassForm(forms.ModelForm):
 
     class Meta:
         model = Classroom
-        fields = ('name', 'subject')
+        fields = ('name', 'subject',)
 
-    def clean(self):
-
+    def clean_name(self):
         name = self.cleaned_data.get('name')
-        subject = self.cleaned_data.get('subject')
-
         if not name or len(name) < 10:
-            raise forms.ValidationError(
-                {'name': ['Classname cannot be less than 10 characters']}
+            raise ValidationError(
+                'Classname cannot be less than 10 characters',
             )
         if len(name) > 50:
-            raise forms.ValidationError(
-                {'name': ['Classname cannot be greated than 50 characters']}
+            raise ValidationError(
+                'Classname cannot be greated than 50 characters',
             )
+        return name
+
+    def clean_subject(self):
+        subject = self.cleaned_data.get('subject')
         if not subject or len(subject) < 2:
-            raise forms.ValidationError(
-                {'subject': ['Subject should be greater than 2 characters']}
+            raise ValidationError(
+                'Subject should be greater than 2 characters',
             )
         if len(subject) > 50:
-            raise forms.ValidationError(
-                {'subject': ['Subject should be less than 50 character']}
+            raise ValidationError(
+                'Subject should be less than 50 character',
             )
 
-        return super(CreateClassForm, self).clean()
-
+        return subject

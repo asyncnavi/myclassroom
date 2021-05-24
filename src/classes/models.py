@@ -58,6 +58,17 @@ class Classwork(models.Model):
     is_closed = models.BooleanField(default=False)
     deadline = models.DateTimeField(null=True)
 
+    def get_created(self):
+        return humanize.naturaltime(self.created)
+
+    def is_submission_ended(self):
+        is_ended = False
+        if self.deadline > timezone.now():
+            is_ended = True
+        else:
+            is_ended = False
+        return is_ended
+
     def __str__(self):
         return f"{self.tittle} - {self.classroom.code}"
 

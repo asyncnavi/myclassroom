@@ -19,7 +19,7 @@
         <div class="mt-4">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'classes' %}">Joined classes</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'joined-classes' %}">Joined classes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'created-classes' %}">Created classes</a>
@@ -27,52 +27,59 @@
             </ul>
         </div>
 
-        {% for class in joined_classes %}
-            <div class="class-card border">
-                <a href="/profile/{{ class.teacher.username }}" class="profile-link">
-                    <img style="width:36px;height:36px;border-radius:100%"
-                         src="https://yt3.ggpht.com/yti/ANoDKi6qkYmmkW5h-MgYVlY8Gk1D3fUyu6z8y2Pzfffl=s88-c-k-c0x00ffffff-no-rj-mo"
-                         alt="">
-                    <span class="text-capitalize">{{ class.teacher.name }}</span>
-                </a>
-                <a href="/class/detail/{{ class.code }}" class="text-decoration-none">
-                    <h4 class="text-secondary ">{{ class.name|truncatechars:30 }}</h4>
-                    <span style="width:max-content" class="badge bg-secondary">{{ class.subject }}</span>
-                    <div class="class-card-delete-icon">
-                        <a href="" class="icon text-danger" data-bs-toggle="modal"
-                           data-bs-target="#exampleModal_{{ class.pk }}">
-                            <i class="fal fa-trash"></i>
+        <div class="row">
+            {% for class in joined_classes %}
+                <div class="col-lg-4">
+                    <div class="class-card border">
+                        <a href="/profile/{{ class.teacher.username }}" class="profile-link">
+                            <img style="width:36px;height:36px;border-radius:100%"
+                                 src="https://yt3.ggpht.com/yti/ANoDKi6qkYmmkW5h-MgYVlY8Gk1D3fUyu6z8y2Pzfffl=s88-c-k-c0x00ffffff-no-rj-mo"
+                                 alt="">
+                            <span class="text-capitalize">{{ class.teacher.name }}</span>
                         </a>
-                    </div>
-                </a>
+                        <a href="{% url 'detailed-joined-class' code=class.code %}" class="text-decoration-none">
+                            <h4 class="text-secondary ">{{ class.name|truncatechars:30 }}</h4>
+                            <span style="width:max-content" class="badge bg-secondary">{{ class.subject }}</span>
+                            <div class="class-card-delete-icon">
+                                <a href="" class="icon text-danger" data-bs-toggle="modal"
+                                   data-bs-target="#exampleModal_{{ class.pk }}">
+                                    <i class="fal fa-trash"></i>
+                                </a>
+                            </div>
+                        </a>
 
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal_{{ class.pk }}" tabindex="-1"
-                     aria-labelledby="exampleModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Confirm exit</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                Are you confirm to delete class : <span class="text-danger">{{ class.name }}</span>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
-                                <form action="" method="post">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="class_code" id="class_code" value="{{ class.pk }}">
-                                    <button type="button" class="btn btn-danger">Exit</button>
-                                </form>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal_{{ class.pk }}" tabindex="-1"
+                             aria-labelledby="exampleModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirm exit</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you confirm to delete class : <span
+                                            class="text-danger">{{ class.name }}</span>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel
+                                        </button>
+                                        <form action="" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="class_code" id="class_code"
+                                                   value="{{ class.pk }}">
+                                            <button type="button" class="btn btn-danger">Exit</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
 
     </div>
 

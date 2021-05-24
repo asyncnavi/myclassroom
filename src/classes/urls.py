@@ -2,15 +2,20 @@ from django.urls import path
 
 from .views import *
 
-urlpatterns = [
-    path('', class_index_view, name="classes"),
-    path('detail/<str:code>', class_detail_view),
-    path('classmates/<str:code>', classmates_view),
-    path('classwork/<str:code>', classwork_view),
-    path('classwork/<str:code>/<str:pk>', classwork_submit_view),
-    path('created', created_classes_view, name="created-classes"),
-    path('create', create_class_view, name="create-class"),
-    path('delete', delete_class_view, name="delete-class"),
-    path('join', join_class_view, name="join-class"),
+# j stands for joined
+# c stands for creatd
 
+urlpatterns = [
+    path('', joined_classes, name="joined-classes"),
+    path('create', create_class, name="create-class"),
+    path('join', join_class, name="join-class"),
+    path('j/<str:code>', joined_class_detail, name="detailed-joined-class"),
+    path('j/classmates/<str:code>', classmates, name="listed-classmates"),
+    path('j/classwork/<str:code>', classwork_list, name="listed-classwork"),
+    path('j/classwork/submit', submit_classwork, name="submit-classwork"),
+    path('j/classwork/d/<str:code>/<int:pk>', classwork_detail, name="detailed-classwork"),
+    # for created classes
+    path('created', created_classes, name="created-classes"),
+    path('c/<str:code>', created_class_detail, name="detailed-created-class"),
+    path('delete', delete_class, name="delete-class"),
 ]

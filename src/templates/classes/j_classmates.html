@@ -8,9 +8,9 @@
     <div class="container py-4">
         <div class="border-bottom">
             <div class="d-flex">
-            <span class="icon">
+            <a href="{{ previous_url }}" class="icon">
                 <i class="fal fa-arrow-left"></i>
-            </span>
+            </a>
                 <h3 class="mx-1">{{ classroom.name }}</h3>
             </div>
             <a class="profile-link mb-2 mx-4" href="/profile/{{ classroom.teacher.username }}">
@@ -21,32 +21,36 @@
             </a>
         </div>
 
-        <!-- Tabs -->
         <ul class="nav nav-tabs my-4">
             <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/class/{{ classrom.code }}">Posts</a>
+                <a class="nav-link" href="{% url 'detailed-joined-class' code=classroom.code %}">Posts</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="/class/classwork/{{ classroom.code }}">Classwork</a>
+                <a class="nav-link" href="{% url 'listed-classwork' code=classroom.code %}">Classwork</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/class/classmates/{{ classroom.code }}">Classmates</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'listed-classmates' code=classroom.code %}">Classmates</a>
             </li>
         </ul>
-
 
         <div class="my-4">
             <h4 class="mx-1 text-dark">Classmates</h4>
             <div class="d-flex flex-wrap">
                 {% for classmate in classmates %}
-
-                    <div class="m-2 d-flex flex-column justify-content-center align-items-center align-content-center border p-2"
-                         style="width:max-content;border-radius: 10px">
+                    <a href="/profile/{{ classmate.username }}"
+                       class=" m-2 border classmate-card">
                         <img style="width: 80px;height: 80px;border-radius: 100%"
                              src="https://yt3.ggpht.com/yti/ANoDKi6qkYmmkW5h-MgYVlY8Gk1D3fUyu6z8y2Pzfffl=s88-c-k-c0x00ffffff-no-rj-mo"
                              alt="">
-                        <h6 class="text-capitalize">{{ classmate.name }}</h6>
-                    </div>
+                        <span class="text-italic">@{{ classmate.username }}</span>
+                        <h6 class="text-capitalize">
+                            {% if user == classmate %}
+                                {{ classmate.name }}(You)
+                            {% else %}
+                                {{ classmate.name }}
+                            {% endif %}
+                        </h6>
+                    </a>
                 {% endfor %}
             </div>
 
